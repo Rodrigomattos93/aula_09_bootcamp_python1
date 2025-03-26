@@ -1,8 +1,9 @@
 import pandas as pd
 import glob
 import os
-from loguru import logger
+from decorador import log_decorator
 
+@log_decorator
 def transformar_jsons_em_dataframe_concatenado() -> pd.DataFrame:
     pasta: str = input("Indique o nome da pasta que você deseja obter os arquivos json: ")
     arquivos_json: list = glob.glob(os.path.join(pasta, '*.json'))
@@ -14,10 +15,12 @@ def transformar_jsons_em_dataframe_concatenado() -> pd.DataFrame:
     
     return arquivo_json_final
 
+@log_decorator
 def criar_coluna_faturamento_em_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df['Valor Total'] = df['Quantidade'] * df['Venda']
     return df
 
+@log_decorator
 def gerar_arquivos_de_saida(df2: pd.DataFrame):
     formato: list = list(
         input("Digite csv e/ou parquet para definir o formato de saída: ").replace(" ", "").split(','))
